@@ -1,0 +1,124 @@
+﻿@model pusher_realtime_table.Models.RealtimeTable
+@using pusher_realtime_table.Models
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Food off | Ordenar</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
+    <script>
+        function myFunction() {
+            var x = document.getElementById("myDIV");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="~/Content/CSS/style.css" />
+    <link rel="stylesheet" href="~/Content/CSS/mycss.css" />
+    <style>
+        .bg-custom {
+            background-color: #000000;
+        }
+        #boton {
+            float: none;
+            color: black;
+            font-size: 1em;
+            font-family: "Negrita";
+            padding: 5px 68px;
+            border: 2px solid #a01217;
+            transition: all 0.3s ease-in-out;
+            display: inline-block;
+            text-align: center;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+            #boton:hover {
+                background-color: #a01217;
+                border: 2px solid transparent;
+                color: #FFF;
+            }
+    </style>
+</head>
+<body>
+    <form id="form1">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-custom">
+            <a class="navbar-brand" href="@Url.Action("Principal", "Home",null)">
+                <img src="~/Content/Logos/logo.png" style="height: 40px; width: 40px; margin: 5px" />Food Off
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="@Url.Action("Index", "Home",null)">Ordenar<span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Nosotros", "Home",null)">¿Qué es Food Off?</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Contacto", "Home",null)">Contacto</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="container w3-container w3-padding-16 w3-center w3-white w3-xlarge">
+            <img src="https://scontent.fcen1-1.fna.fbcdn.net/v/t1.0-9/19756729_100833750560552_6195294443525476091_n.png?_nc_cat=0&_nc_eui2=AeEQT9DAPhtBpHVM_kdpmGRWrzWpSLzf9co3HR1sl38hb3JR4iOYMlseqj7gadoldX0KfVqoqkeZprjh2UrGWUfbLcS0elhHUsrdAMPDWirZEA&oh=aa03abbbbcd7cad336e8430d05d091b4&oe=5B97F575" class="img-responsive" style="width:200px; height: auto; margin: 10px" /><br/>
+            <a href="#" class="btn1" id="boton" onclick="myFunction()">Menu</a>
+            <div id="myDIV"  style="display: none">
+                <br/><img id="loadingImage" class="img-fluid" src="https://scontent.fcen1-1.fna.fbcdn.net/v/t1.0-9/33189396_10209617251348145_6687541457449910272_n.jpg?_nc_cat=0&oh=14b50a35682d2f91f2723c101c896dc7&oe=5B8E1BCA"/>
+            </div>      
+        </div>
+    </form>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="container w3-container w3-center w3-white w3-xlarge">
+            <h4>Por favor rellena los siguientes campos</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <label class="control-label">Nombre:</label>
+                @Html.EditorFor(model => model.title, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.title, "", new { @class = "text-danger" })
+            </div>
+            @Html.Hidden("Nombre_Foodtruck", "Lancelot")
+            <div class="form-group">
+                <label class="control-label">Numero de mesa:</label>
+                @Html.EditorFor(model => model.year, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.year, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label class="control-label">Describe tu orden:</label>
+                @Html.EditorFor(model => model.Desc_Orden, new { htmlAttributes = new { @style = "height:100px", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Desc_Orden, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlSelect1">Metodo de pago:</label>
+                @Html.DropDownListFor(m => m.Metodo_Pago,
+                    new SelectList(Enum.GetNames(typeof(payments))),
+                    "Seleccione", new { @class = "form-control" })
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Confirmar orden" class="w3-button w3-light-grey w3-block" />
+            </div>
+            <br />
+        </div>
+    }
+    <footer class="w3-center bg-light">
+        <a href="@Url.Action("Contacto", "Home",null)">
+            <img src="~/Content/Logos/logo.png" class="img-responsive" style="width: 80px; height: auto; margin: 10px" />
+        </a>
+    </footer>
+</body>
+</html>
